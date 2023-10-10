@@ -91,7 +91,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{任务类型 $J_t$}{Moldable/Rigid}
+\begin{frame}[fragile]{任务类型 $J_t$ 与实际执行时间 $T^e$}{Moldable/Rigid}
 
     任务类型 $J_t$ 影响任务实际执行时间 $T^e$ 的计算.
 
@@ -106,5 +106,24 @@
         \end{algorithm}
         \DecMargin{1.5em}
     \end{minipage}
+
+\end{frame}
+
+\begin{frame}{挂起时间 $T^s$ 与恢复时间 $T^r$}
+
+    当正在执行任务的实例到期时, 任务需要挂起到硬盘, 该操作需要的时间为:
+
+    \begin{equation*}
+        T^s = \frac{J_m}{v_s}
+    \end{equation*}
+
+    当任务首次在实例中运行或从挂起状态恢复时, 任务需要加载到内存, 该操作需要的时间为:
+
+    \begin{equation*}
+        T^r = \begin{cases}
+            \dfrac{J_m}{v_r},          & J_r = None \, \text{or} \, J_r = I_r, \\
+            2 \times \dfrac{J_m}{v_r}, & \text{otherwise}.
+        \end{cases}
+    \end{equation*}
 
 \end{frame}

@@ -1,3 +1,27 @@
 \begin{frame}{任务调度流程}
-    
+
+    \scriptsize
+    \begin{tikzpicture}[node distance=1.5cm]
+        \node (start) [startstop] {Start};
+        \node (in) [io, below of=start] {Input: 当前任务 $J$ 所选实例 $I$};
+        \node (memory check) [decision, below of=in, yshift=-0.5cm] {$J_m \leqslant I_m$};
+        \node (core check) [decision, right of=memory check, xshift=2cm, align=center] {$J_t = Rigid$\\\&\\$J_c > I_c$};
+        \node (out of memory) [process, below of=memory check, yshift=-1cm, align=center] {任务调度失败\\$reward = -100$};
+        \node (insufficient cores) [process, below of=core check, yshift=-1cm, align=center] {任务调度失败\\$reward = -100$};
+        \node (calculate) [process, right of=core check, xshift=2.5cm, align=center] {计算实际执行时间 $T^e$\\挂起时间 $T^s$\\恢复时间 $T^r$};
+        \node (update) [process, right of=calculate, xshift=1.5cm, align=center] {更新实例状态\\更新任务状态};
+
+        \draw [arrow] (start) -- (in);
+        \draw [arrow] (in) -- (memory check);
+        \draw [arrow] (memory check) -- node[anchor=east] {N} (out of memory);
+        \draw [arrow] (memory check) -- node[anchor=south] {Y} (core check);
+        \draw [arrow] (core check) -- node[anchor=east] {Y} (insufficient cores);
+        \draw [arrow] (core check) -- node[anchor=south] {N} (calculate);
+        \draw [arrow] (calculate) -- (update);
+    \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{更新实例/任务状态}{任务在实例空闲之前提交 $t_s \leqslant t_i$}
+
 \end{frame}
