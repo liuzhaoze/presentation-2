@@ -1,0 +1,38 @@
+\begin{frame}{实例 (Instance) 的数学模型}
+
+    \begin{columns}
+
+        \column{0.5\textwidth}
+
+        固有属性：
+
+        \begin{itemize}
+            \item $I_c$ 实例的计算核心数
+            \item $I_m$ 实例的内存大小
+            \item $I_r$ 实例所在区域
+            \item $I_b$ 实例的计费类型 (On Demand/Spot)
+            \item $v_s$ 实例中任务挂起 (suspend) 速度
+            \item $v_r$ 实例中任务恢复 (resume) 速度
+        \end{itemize}
+
+        \column{0.5\textwidth}
+
+        状态属性：
+
+        \begin{itemize}
+            \item $T_r$ 实例的剩余租期 (remain time)
+            \item $t_i$ 实例空闲的时刻 (idle time)
+        \end{itemize}
+
+    \end{columns}
+
+    \vspace{1em}
+
+    计费类型：
+
+    \begin{itemize}
+        \item On Demand: 每小时价格固定
+        \item Spot: 每小时价格随市场波动
+    \end{itemize}
+
+\end{frame}

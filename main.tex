@@ -7,7 +7,7 @@
 \usepackage{tikz}         % 绘图
 \usepackage{subcaption}   % 创建子图
 \usepackage{minted}       % 代码高亮
-\usepackage{algorithm2e}  % 伪代码
+\usepackage[ruled,linesnumbered]{algorithm2e}  % 伪代码
 \usepackage{lmodern}      % 消除 warning
 \usepackage{ncepu-beamer} % 应用主题
 
@@ -40,13 +40,38 @@
 
 \end{frame}
 
+\begin{frame}{摘要}
+
+    与 Cost-Aware 的不同之处：
+
+    \begin{enumerate}
+        \item 引入了 On Demand 和 Spot 两种计费规则的实例
+        \item 引入了 Moldable 和 Rigid 两种任务类型
+        \item 引入了任务的挂起、恢复和跨区域调度
+    \end{enumerate}
+
+\end{frame}
+
 \section{数学模型}
+
+\begin{frame}
+
+    \centering
+    使用 $T$ 表示时间段, $t$ 表示时刻.
+
+\end{frame}
 
 \subsection{实例建模}
 
+\input{src/instance_model.tex}
+
 \subsection{任务建模}
 
+\input{src/job_model.tex}
+
 \subsection{任务调度流程建模}
+
+\input{src/scheduling_model.tex}
 
 \section{DQN结构}
 
