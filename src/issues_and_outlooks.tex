@@ -1,0 +1,27 @@
+\begin{frame}{问题一: 时间指标}
+
+    在任务调度流程中, 记录了每次调度任务的提交时刻 $t_s$, 开始时刻 $t^b$ 和结束时刻 $t^e$.
+    应当如何使用这些时间数据更好地比较不同调度算法的性能?
+
+    目前想到的方法:
+    \begin{enumerate}
+        \item 比较平均每次任务调度的响应时间 $t^e - t_s$
+        \item 比较平均每次任务调度的相应比 $t^e - t_s / t^e - t^b$
+        \item 比较平均每个任务从第一次提交到最终全部完成的时间
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{问题二: 调度成功率}
+
+    目前DRL调度算法的成功率不能达到 100\%. 为了保证调度流程能够正常进行, 在DRL调度失败时使用Round-Robin调度算法, 将任务分配到可以执行的实例上.
+
+    是否有可行的办法使DRL调度算法的成功率稳定在 100\%?
+
+    \begin{enumerate}
+        \item 应用DQN的全部高级技巧: 优先经验回放、双Q学习、对决网络和噪声网络
+        \item 增加训练轮数
+        \item \dots
+    \end{enumerate}
+
+\end{frame}

@@ -17,6 +17,8 @@
 \svgsetup{inkscapelatex=false}
 % NOTE: draw.io 中的文本需要关闭自动换行和格式化文本
 
+% 使用 tikz 绘制大括号
+\usetikzlibrary{decorations.pathreplacing}
 % 使用 tikz 绘制流程图
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.75cm,text centered, draw=black, fill=red!30]
@@ -83,19 +85,18 @@
 
 \section{DQN结构}
 
+\input{src/dqn_structure.tex}
+
 \section{实验结果}
+
+\input{src/result.tex}
+
+\section{问题与展望}
+
+\input{src/issues_and_outlooks.tex}
 
 \section{参考文献}
 
-\section{问题}
-
-\begin{frame}
-
-    \centering
-    \Huge
-    \usefont{OT1}{pzc}{m}{n}
-    Thanks for listening!
-
-\end{frame}
+\input{src/reference.tex}
 
 \end{document}
