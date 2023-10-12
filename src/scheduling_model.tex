@@ -158,7 +158,10 @@
 
                     \draw[decorate, decoration={brace, mirror, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, below=13pt] {$T_r$};
 
-                    \draw[->] (-1, 0.5) node[above] {$t_s$} -- (-1, 3pt);
+                    \draw[->] (-0.5, 0.5) node[above] {$t_s$} -- (-0.5, 3pt);
+
+                    \draw[<->] (1, 1) -- (5.5, 1);
+                    \node[above] at (3.25, 1) {$T^e$};
 
                     \draw[-] (1, 5pt) -- (1, -5pt);
                     \uncover<2->{\node[above] at (1, 5pt) {\textcolor{blue}{$t^b$}};}
