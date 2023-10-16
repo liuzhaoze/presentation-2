@@ -79,9 +79,10 @@
     \begin{minipage}{0.6\textwidth}
         \IncMargin{1.5em}
         \begin{algorithm}[H]
+            $\text{cost} \leftarrow 0$\;
             \While{$T_r - T^r - T^s \leqslant 0$}{
                 $T^r \leftarrow T^r + 1$\tcc*{续租一小时}
-                $\text{cost} \leftarrow t_i \text{时刻的实例价格}$\;
+                $\text{cost} \leftarrow \text{cost} + t_i \text{时刻的实例价格}$\;
             }
         \end{algorithm}
     \end{minipage}
@@ -189,7 +190,7 @@
             更新实例状态:
             \begin{itemize}
                 \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow 0$
-                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_i + T_t$
+                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_i + T_r$
             \end{itemize}
         }
 
@@ -245,7 +246,7 @@
         \uncover<3->{
             更新实例状态:
             \begin{itemize}
-                \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow T_r - \textcolor{red}{T_w}$
+                \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow T_r - \textcolor{blue}{T_w}$
                 \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_s$
             \end{itemize}
         }
@@ -307,7 +308,7 @@
         reward = \max \left\{ - (\xi \cdot \text{cost} + \eta \cdot T_w) \cdot \frac{t^e - t_s}{t^e - t^b}, -50 \right\}
     \end{equation*}
 
-    将租金cost和浪费的时间 $T_w$ 作为惩罚项, 任务相应比 $(t^e - t_s)/(t^e - t^b)$ 作为系数. 限制任务调度成功时的奖励不超过 $-50$, 与任务调度失败的奖励 $-100$ 拉开差距.
+    将租金cost和浪费的时间 $T_w$ 作为惩罚项, 任务响应比 $(t^e - t_s)/(t^e - t^b)$ 作为系数. 限制任务调度成功时的奖励不低于 $-50$, 与任务调度失败的奖励 $-100$ 拉开差距.
 
     其中, $\xi$ 和 $\eta$ 是超参数.
 
