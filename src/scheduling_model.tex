@@ -81,7 +81,7 @@
         \begin{algorithm}[H]
             $\text{cost} \leftarrow 0$\;
             \While{$T_r - T^r - T^s \leqslant 0$}{
-                $T^r \leftarrow T^r + 1$\tcc*{续租一小时}
+                $T_r \leftarrow T_r + 1$\tcc*{续租一小时}
                 $\text{cost} \leftarrow \text{cost} + t_i \text{时刻的实例价格}$\;
             }
         \end{algorithm}
