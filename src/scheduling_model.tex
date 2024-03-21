@@ -8,7 +8,7 @@
         \node (core check) [decision, right of=memory check, xshift=2cm, align=center] {$J_t = Rigid$\\\&\\$J_c > I_c$};
         \node (out of memory) [process, below of=memory check, yshift=-1cm, align=center] {任务调度失败\\$reward = -100$};
         \node (insufficient cores) [process, below of=core check, yshift=-1cm, align=center] {任务调度失败\\$reward = -100$};
-        \node (calculate) [process, right of=core check, xshift=2.5cm, align=center] {计算实际执行时间 $T^e$\\挂起时间 $T^s$\\恢复时间 $T^r$};
+        \node (calculate) [process, right of=core check, xshift=2.5cm, align=center] {计算实际执行时间 $T_e$\\加载时间 $T_l$\\写回时间 $T_w$};
         \node (update) [process, right of=calculate, xshift=1.5cm, align=center] {更新实例状态\\更新任务状态};
 
         \draw [arrow] (start) -- (in);
@@ -37,7 +37,7 @@
                 \foreach \c/\t in {1/-1, 2/2.5, 3/6} {
                         \draw[->] (\t, 0.8) -- (\t, 3pt);
                         \node[shape=circle,draw,inner sep=2pt] at (\t, 1.2) (char) {\c};
-                        \node[right=7] at (\t, 1.2) {$t_s$};
+                        \node[right=7] at (\t, 1.2) {$t_a$};
                     }
 
             \end{tikzpicture}
@@ -45,14 +45,14 @@
     \end{figure}
 
     \begin{enumerate}
-        \item 任务在实例空闲之前提交 $t_s \leqslant t_i$
-        \item 任务在实例空闲之后、到期之前提交 $t_i < t_s < t_i + T_r$
-        \item 任务在实例到期之后提交 $t_s \geqslant t_i + T_r$
+        \item 任务在实例空闲之前提交 $t_a \leqslant t_i$
+        \item 任务在实例空闲之后、到期之前提交 $t_i < t_a < t_i + T_r$
+        \item 任务在实例到期之后提交 $t_a \geqslant t_i + T_r$
     \end{enumerate}
 
 \end{frame}
 
-\begin{frame}{情况一: 任务在实例空闲之前提交 $t_s \leqslant t_i$}{判断是否续租}
+\begin{frame}{情况一: 任务在实例空闲之前提交 $t_a \leqslant t_i$}{判断是否续租}
 
     \begin{figure}
         \scalebox{1.5}{
@@ -64,12 +64,12 @@
 
                 \draw[decorate, decoration={brace, mirror, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, below=13pt] {$T_r$};
 
-                \draw[->] (-1, 0.5) node[above] {$t_s$} -- (-1, 3pt);
+                \draw[->] (-1, 0.5) node[above] {$t_a$} -- (-1, 3pt);
 
                 \draw[-] (1, 5pt) -- (1, -5pt);
-                \node[above] at (0.5, 0) {$T^r$};
+                \node[above] at (0.5, 0) {$T_l$};
                 \draw[-] (4, 5pt) -- (4, -5pt);
-                \node[above] at (4.5, 0) {$T^s$};
+                \node[above] at (4.5, 0) {$T_w$};
 
             \end{tikzpicture}
         }
@@ -80,7 +80,7 @@
         \IncMargin{1.5em}
         \begin{algorithm}[H]
             $\text{cost} \leftarrow 0$\;
-            \While{$T_r - T^r - T^s \leqslant 0$}{
+            \While{$T_r - T_l - T_w \leqslant 0$}{
                 $T_r \leftarrow T_r + 1$\tcc*{续租一小时}
                 $\text{cost} \leftarrow \text{cost} + t_i \text{时刻的实例价格}$\;
             }
@@ -89,7 +89,7 @@
 
 \end{frame}
 
-\begin{frame}{情况一: 任务在实例空闲之前提交 $t_s \leqslant t_i$}{任务能够全部执行 $T^e \leqslant T_r - T^r$}
+\begin{frame}{情况一: 任务在实例空闲之前提交 $t_a \leqslant t_i$}{任务能够全部执行 $T_e \leqslant T_r - T_l$}
     \begin{columns}
 
         \column{0.5\textwidth}
@@ -104,14 +104,14 @@
 
                     \draw[decorate, decoration={brace, mirror, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, below=13pt] {$T_r$};
 
-                    \draw[->] (-1, 0.5) node[above] {$t_s$} -- (-1, 3pt);
+                    \draw[->] (-1, 0.5) node[above] {$t_a$} -- (-1, 3pt);
 
                     \draw[-] (1, 5pt) -- (1, -5pt);
-                    \uncover<2->{\node[above] at (1, 5pt) {\textcolor{blue}{$t^b$}};}
-                    \node[above] at (0.5, 0) {$T^r$};
+                    \uncover<2->{\node[above] at (1, 5pt) {\textcolor{blue}{$t_b$}};}
+                    \node[above] at (0.5, 0) {$T_l$};
                     \draw[-] (3.5, 5pt) -- (3.5, -5pt);
-                    \uncover<2->{\node[above] at (3.5, 5pt) {\textcolor{blue}{$t^e$}};}
-                    \node[above] at (2.25, 0) {$T^e$};
+                    \uncover<2->{\node[above] at (3.5, 5pt) {\textcolor{blue}{$t_e$}};}
+                    \node[above] at (2.25, 0) {$T_e$};
 
                     \uncover<3->{
                         \node[below=3] at (3.5, -5pt) {\textcolor{red}{$t_i$}};
@@ -123,13 +123,13 @@
 
         \column{0.5\textwidth}
 
-        \uncover<2->{任务在 \textcolor{blue}{$t^b = t_i + T^r$} 时刻开始执行, 在 \textcolor{blue}{$t^e = t^b + T^e$} 时刻结束执行.}
+        \uncover<2->{任务在 \textcolor{blue}{$t_b = t_i + T_l$} 时刻开始执行, 在 \textcolor{blue}{$t_e = t_b + T_e$} 时刻结束执行.}
 
         \uncover<3->{
             更新实例状态:
             \begin{itemize}
-                \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow T_r - T^r - T^e$
-                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow \textcolor{blue}{t^e}$
+                \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow T_r - T_l - T_e$
+                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow \textcolor{blue}{t_e}$
             \end{itemize}
         }
 
@@ -144,7 +144,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{情况一: 任务在实例空闲之前提交 $t_s \leqslant t_i$}{任务只能部分执行 $T^e > T_r - T^r$}
+\begin{frame}{情况一: 任务在实例空闲之前提交 $t_a \leqslant t_i$}{任务只能部分执行 $T_e > T_r - T_l$}
     \begin{columns}
 
         \column{0.5\textwidth}
@@ -159,24 +159,24 @@
 
                     \draw[decorate, decoration={brace, mirror, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, below=13pt] {$T_r$};
 
-                    \draw[->] (-0.5, 0.5) node[above] {$t_s$} -- (-0.5, 3pt);
+                    \draw[->] (-0.5, 0.5) node[above] {$t_a$} -- (-0.5, 3pt);
 
                     \draw[<->] (1, 1) -- (5.5, 1);
-                    \node[above] at (3.25, 1) {$T^e$};
+                    \node[above] at (3.25, 1) {$T_e$};
 
                     \draw[-] (1, 5pt) -- (1, -5pt);
-                    \uncover<2->{\node[above] at (1, 5pt) {\textcolor{blue}{$t^b$}};}
-                    \node[above] at (0.5, 0) {$T^r$};
+                    \uncover<2->{\node[above] at (1, 5pt) {\textcolor{blue}{$t_b$}};}
+                    \node[above] at (0.5, 0) {$T_l$};
                     \draw[-] (4, 5pt) -- (4, -5pt);
-                    \uncover<2->{\node[above] at (4, 5pt) {\textcolor{blue}{$t^e$}};}
-                    \node[above] at (4.5, 0) {$T^s$};
+                    \uncover<2->{\node[above] at (4, 5pt) {\textcolor{blue}{$t_e$}};}
+                    \node[above] at (4.5, 0) {$T_w$};
                     \uncover<2->{\node[above] at (2.5, 0) {\textcolor{blue}{$\hat{T}^e$}};}
 
                     \uncover<3->{
                         \node[below=3] at (5, -5pt) {\textcolor{red}{$t_i$}};
                     }
                     \uncover<4->{
-                        \node[above] at (5, 5pt) {\textcolor{purple}{$t_s$}};
+                        \node[above] at (5, 5pt) {\textcolor{purple}{$t_a$}};
                     }
                 \end{tikzpicture}
             }
@@ -184,7 +184,7 @@
 
         \column{0.5\textwidth}
 
-        \uncover<2->{任务在 \textcolor{blue}{$t^b = t_i + T^r$} 时刻开始执行, 在 \textcolor{blue}{$t^e = t_i + T_r - T^s$} 时刻结束执行.\\任务实际执行时长 \textcolor{blue}{$\hat{T}^e = t^e - t^b$}.}
+        \uncover<2->{任务在 \textcolor{blue}{$t_b = t_i + T_l$} 时刻开始执行, 在 \textcolor{blue}{$t_e = t_i + T_r - T_w$} 时刻结束执行.\\任务实际执行时长 \textcolor{blue}{$\hat{T}^e = t_e - t_b$}.}
 
         \uncover<3->{
             更新实例状态:
@@ -202,14 +202,14 @@
                               J_l - \hat{T}^e / \frac{SU(J_c)}{SU(I_c)}, & J_t = \text{Moldable}.
                           \end{cases}$
                 \item 任务上一次执行所在的区域 $J_r \leftarrow I_r$
-                \item 任务提交时刻 $\textcolor{purple}{t_s} \leftarrow \textcolor{red}{t_i}$
+                \item 任务提交时刻 $\textcolor{purple}{t_a} \leftarrow \textcolor{red}{t_i}$
             \end{itemize}
         }
 
     \end{columns}
 \end{frame}
 
-\begin{frame}{情况二: 任务在实例空闲之后、到期之前提交\\$t_i < t_s < t_i + T_r$}
+\begin{frame}{情况二: 任务在实例空闲之后、到期之前提交\\$t_i < t_a < t_i + T_r$}
     \begin{columns}
 
         \column{0.5\textwidth}
@@ -224,7 +224,7 @@
 
                     \draw[decorate, decoration={brace, mirror, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, below=13pt] {$T_r$};
 
-                    \draw[->] (3.5, 0.5) node[above] {$t_s$} -- (3.5, 3pt);
+                    \draw[->] (3.5, 0.5) node[above] {$t_a$} -- (3.5, 3pt);
 
                     \uncover<2->{
                         \draw[blue, decorate, decoration={brace, raise=7pt, amplitude=7pt}] (0, 0) -- (3.5, 0) node[pos=0.5, above=13pt] {\textcolor{blue}{$T_w$}};
@@ -241,13 +241,13 @@
 
         \column{0.5\textwidth}
 
-        \uncover<2->{浪费时间 $\textcolor{blue}{T_w} = t_s - t_i$.}
+        \uncover<2->{浪费时间 $\textcolor{blue}{T_w} = t_a - t_i$.}
 
         \uncover<3->{
             更新实例状态:
             \begin{itemize}
                 \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow T_r - \textcolor{blue}{T_w}$
-                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_s$
+                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_a$
             \end{itemize}
         }
 
@@ -256,7 +256,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{情况三: 任务在实例到期之后提交 $t_s \geqslant t_i + T_r$}
+\begin{frame}{情况三: 任务在实例到期之后提交 $t_a \geqslant t_i + T_r$}
     \begin{columns}
 
         \column{0.5\textwidth}
@@ -271,7 +271,7 @@
 
                     \draw[decorate, decoration={brace, mirror, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, below=13pt] {$T_r$};
 
-                    \draw[->] (6, 0.5) node[above] {$t_s$} -- (6, 3pt);
+                    \draw[->] (6, 0.5) node[above] {$t_a$} -- (6, 3pt);
 
                     \uncover<2->{
                         \draw[blue, decorate, decoration={brace, raise=7pt, amplitude=7pt}] (0, 0) -- (5, 0) node[pos=0.5, above=13pt] {\textcolor{blue}{$T_w$}};
@@ -293,7 +293,7 @@
             更新实例状态:
             \begin{itemize}
                 \item 实例剩余租期 $\textcolor{red}{T_r} \leftarrow 0$
-                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_s$
+                \item 实例空闲的时刻 $\textcolor{red}{t_i} \leftarrow t_a$
             \end{itemize}
         }
 
@@ -305,10 +305,10 @@
 \begin{frame}{任务调度成功时的奖励}
 
     \begin{equation*}
-        reward = \max \left\{ - (\xi \cdot \text{cost} + \eta \cdot T_w) \cdot \frac{t^e - t_s}{t^e - t^b}, -50 \right\}
+        reward = \max \left\{ - (\xi \cdot \text{cost} + \eta \cdot T_w) \cdot \frac{t_e - t_a}{t_e - t_b}, -50 \right\}
     \end{equation*}
 
-    将租金cost和浪费的时间 $T_w$ 作为惩罚项, 任务响应比 $(t^e - t_s)/(t^e - t^b)$ 作为系数. 限制任务调度成功时的奖励不低于 $-50$, 与任务调度失败的奖励 $-100$ 拉开差距.
+    将租金cost和浪费的时间 $T_w$ 作为惩罚项, 任务响应比 $(t_e - t_a)/(t_e - t_b)$ 作为系数. 限制任务调度成功时的奖励不低于 $-50$, 与任务调度失败的奖励 $-100$ 拉开差距.
 
     其中, $\xi$ 和 $\eta$ 是超参数.
 

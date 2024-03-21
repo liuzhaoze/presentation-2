@@ -18,7 +18,7 @@
 
         \begin{itemize}
             \item $J_l$ 任务长度（小时）
-            \item $t_s$ 任务提交时刻 (submit time)
+            \item $t_a$ 任务到达时刻 (arrival time)
             \item $J_r$ 任务上一次执行所在的区域
         \end{itemize}
 
@@ -109,20 +109,20 @@
 
 \end{frame}
 
-\begin{frame}{挂起时间 $T^s$ 与恢复时间 $T^r$}
+\begin{frame}{挂起时间 $T_w$ 与恢复时间 $T_l$}
 
     当正在执行任务的实例到期时, 任务需要挂起到硬盘, 该操作需要的时间为:
 
     \begin{equation*}
-        T^s = \frac{J_m}{v_s}
+        T_w = \frac{J_m}{v_w}
     \end{equation*}
 
     当任务首次在实例中运行或从挂起状态恢复时, 任务需要加载到内存, 该操作需要的时间为:
 
     \begin{equation*}
-        T^r = \begin{cases}
-            \dfrac{J_m}{v_r},          & J_r = None \, \text{or} \, J_r = I_r, \\
-            2 \times \dfrac{J_m}{v_r}, & \text{otherwise}.
+        T_l = \begin{cases}
+            \dfrac{J_m}{v_l},          & J_r = None \, \text{or} \, J_r = I_r, \\
+            2 \times \dfrac{J_m}{v_l}, & \text{otherwise}.
         \end{cases}
     \end{equation*}
 

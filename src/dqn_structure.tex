@@ -4,9 +4,9 @@
 
     \begin{equation*}
         \begin{bmatrix}
-            J_c & J_m & J_t & J_r & t^{(1)}_i - t_s & T^{(1)}_r - J_l & \dots & t^{(n)}_i - t_s & T^{(n)}_r - J_l
+            J_c & J_m & J_t & J_r & T_{wait}^{(1)} & T_r^{(1)} & \dots & T_{wait}^{(M)}, T_r^{(M)}
         \end{bmatrix}
     \end{equation*}
 
-    即: 任务需要的计算核心数、任务需要的内存大小、任务的类型、任务上一次执行所在的区域; 任务提交给每个实例后预计的等待时间和实例剩余的租期.
+    即: 任务需要的计算核心数、任务需要的内存大小、任务的类型、任务上一次执行所在的区域; 任务提交给每个实例后预计的等待时间 $T_{wait}^{(j)} = \max \left\{t_i^{(j)} - t_a^{(i)}, 0\right\}$ 和实例剩余的租期.
 \end{frame}
